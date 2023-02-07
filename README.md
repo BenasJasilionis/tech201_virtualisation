@@ -41,3 +41,5 @@ Responsible for tying teams together in other areas of software development cycl
 * Helps organise priorities in regards to how likely something is to happen and how impactful it would be if it did happen
 * Table : Description -> chance of occurence -> potential damage -> risk
 * Important to properly evaluate risk of different issues and the chance of occurences happening for different business, e.g. banks more likely to receive cyber attacks than a small business
+
+# Development environments
