@@ -50,11 +50,13 @@ Area where developers can write their code, run their code( need packages, depen
 * Even though devs can make environments, DevOps engineers make the environments because they create the environment in a way that wont lead to integration issues further down the line
 * DevOps engineers can standardise environments, make sure everyone is on the same system- makes collaboration easier
 
+
 ## What makes a good dev environment?
 * Devs may need to use licenced software - DevOps engineer would have to evaluate most cost effective licence in relation to task requirements. 
 * Dev environments may be monoliths due to ease of use which this provides. Further from production, the more user friendliness is important.
 * Dev environments tend to be local, adding to security
 * Virtualisation - use OS of one machine to create another OS within the machine and use it while having access to original OS
+* Virtualisation allows us to set up the same dev environemtn for everyone, even if they are using different operating systems with their base machines
 * **User friendly, fast and robust** - If the environment is hard to use or buggy, devs will use their own which cna lead to integration issues later on
 * **Ease to update and change for DevOps engineer** - If the devs need something, should be easy for us to add, should always be green lit by DevOps engineer
 * **Should match production environment as closely as possible**- Reduces the chance of having integration issues, dont want a dev environment that works differently to production environment
@@ -62,3 +64,48 @@ Area where developers can write their code, run their code( need packages, depen
 * **It should only support one application** - Can be tempting to make dev environment with the purpose of making several different applications, this has potential problems
 1) Issue occurs if different applications require different versions of the language being used 
 2) App 1 needs a program that conflicts with a program needed for app 2
+
+## Set up  dev environment
+Need :
+1)Vagrant
+2)Virtual box
+3)Ruby
+4)Bash
+5)Git
+6)SSH
+
+
+Give instructions to vagrant and vagrant will pas nstructions to virtual box, and virtual box will make the environment. Developers can log in via SSH- secure way of logging in to another machine
+* Vagrant uses ruby
+* Ruby install link https://rubyinstaller.org/downloads/
+* Virtual box link https://www.virtualbox.org/wiki/Download_Old_Builds_6_1 ( click the windows hosts option to start download)
+* Virtual box shows us what state our virtual machine is in
+* windows hypervisor on
+* windows virtual machine on
+
+## Vagrant
+* Open up git bash and navigate to the directory being tracked by git using cd
+* in git bash - vagrant init ubuntu/xenial64 ( ubuntu version of linux and xenial64 the distribution of linux) - makes a configuration file in the target folder
+* in the file are the instrcutions vagrant gives to virtual box- allows us to standerdise the dev environment, just need to give the instructions (language is ruby)
+* The ruby code tells vagrant what box to use ( box means operating system)
+* To send vagrant file to virtual box - vagrant up
+* Should now be able to visualise the virtual environment in virtual box
+* Connect to virtual machine : vagrant ssh
+* Should now be in virtual machine
+* ls -a -> shows hidden files and folders
+* Want to use a web server- either apache or nginx
+* sudo (super user) apt-get (used to get something form the internet) update(updates the machine) -y(used to automate questions) - sudo apt-get update -y
+* Doing this confirms virtual machine has access to internet
+* sudo apt-get install nginx -y
+* (clear) cleans the screen
+* Have to start the systme after downloading it -> sudo systemctl start nginx (name of the program)
+* Can check if it worked by doing -> sudo systemct1 status nginx
+* Machine has IP but we dont know it, and vagrant changes the IP every time it gets span up
+* To give out vitual machine an IP :In vagrant file add below box command -> config.vm.network "private_network", ip: "192.168.10.100"
+* Can specify any IP you want
+* To exit virtual machine type exit
+* In git bash, do vagrant reload (checks for updates in configuration file without spinning up the machine completely)
+* Can type in IP into internet and will get the welcome page for the webserver
+* Can add to vagrant file to add more virtual machine, get more features, allow them to communciate between each other easily
+
+* Changing permissions on file -> could be useful
