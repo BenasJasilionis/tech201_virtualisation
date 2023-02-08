@@ -127,3 +127,7 @@ Setting up a development environment will require the following software and fea
 * any other number means a range of ip addresses
 * In binary an ipv4 address is a 32 binary
 * Changing permissions on file -> could be useful
+
+## ALinux and BASH commands
+
+
