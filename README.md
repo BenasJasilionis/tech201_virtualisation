@@ -32,7 +32,7 @@ Responsible for tying teams together in other areas of software development cycl
 * **Cost** - Ensure that the tech we use meets our needs at the lowest price possible. Maximise cost efficiency. For example: how powerful a machine do we need to conduct a task, do we need certain servers running etc. (solutions architect largely responsible)(junior engineers still need to know when to use a smaller machine for a task to maximise cost efficiency) (new position- cloud cost auditer- find out whats not being used and shut it down, but have to be careful, e.g. something may only be used once a year)
 
 ## Infrastructure and architecture
-* **Monolith**- everything you need to run an app (sotrage,) all reside on the same physical machine - if theres an error with that machine, every service is hit
+* **Monolith**- everything you need to run an app (storage,) all reside on the same physical machine - if theres an error with that machine, every service is hit
 * **2 tier architecture**- 2 machines
 * **Microservices** - breaking up the application as well as they way its sent out into users onto many machines. Containers allow us to implement a microservice architecture
 
@@ -99,7 +99,7 @@ Give instructions to vagrant and vagrant will pas nstructions to virtual box, an
 * sudo apt-get install nginx -y
 * (clear) cleans the screen
 * Have to start the systme after downloading it -> sudo systemctl start nginx (name of the program)
-* Can check if it worked by doing -> sudo systemct1 status nginx
+* Can check if it worked by doing -> sudo systemctl status nginx
 * Machine has IP but we dont know it, and vagrant changes the IP every time it gets span up
 * To give out vitual machine an IP :In vagrant file add below box command -> config.vm.network "private_network", ip: "192.168.10.100"
 * Can specify any IP you want
@@ -108,4 +108,9 @@ Give instructions to vagrant and vagrant will pas nstructions to virtual box, an
 * Can type in IP into internet and will get the welcome page for the webserver
 * Can add to vagrant file to add more virtual machine, get more features, allow them to communciate between each other easily
 
+
+
+* /32 = ip address
+* any other number means a range of ip addresses
+* In binary an ipv4 address is a 32 binary
 * Changing permissions on file -> could be useful
