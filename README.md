@@ -76,10 +76,9 @@ Setting up a development environment will require the following software and fea
 1) Vagrant - https://developer.hashicorp.com/vagrant/downloads
 2) Virtual box - https://www.virtualbox.org/wiki/Download_Old_Builds_6_1 ( click the windows hosts option to start download) (virtual box shows us the state of our virtual machine)
 3) Ruby - https://rubyinstaller.org/downloads/
-4) Bash
-5) Git
-6) SSH
-7) An IDE is helpful, we will be usign Vscode - https://code.visualstudio.com/download
+4) GitBash
+5) SSH
+6) An IDE is helpful, we will be usign Vscode - https://code.visualstudio.com/download
 
 ## Set up dev environment -settings -Windows features
 * Type windows features into your search bar and click on the application with that name
