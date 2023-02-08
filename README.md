@@ -85,6 +85,7 @@ Setting up a development environment will require the following software and fea
 * Type windows features into your search bar and click on the application with that name
 * If `Hyper V` is avalable, `disable` it
 * `Enable ` `Virtual Machine Platform` and `Windows Hypervisor Platform`
+* `Restart` your machine
 
 ## Set up dev environment - settings -Enabling virtualisation through BIOS
 * When starting your machine, rapidly press the `BIOS key` - this varies between users and should be briefly displayed when starting, if it is not try `f10`.
