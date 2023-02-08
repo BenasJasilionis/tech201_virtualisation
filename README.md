@@ -91,14 +91,6 @@ Setting up a development environment will require the following software and fea
 * Once in the `BIOS` screen, navigate to `CPU configuration`
 * Look at the list of options and find the option which mentions `virtualisation` and `enable` it
 * `Exit` an `save` your changes
-
-
-
-Give instructions to vagrant and vagrant will pass instructions to virtual box, and virtual box will make the environment. Developers can log in via SSH- secure way of logging in to another machine
-* Vagrant uses ruby
-* Virtual box shows us what state our virtual machine is in
-
-
 ## Making the virtual environment
 **Note- when using Git Bash, make sure to run it as administrator**
 1) Open up `git bash` and navigate to the directory being tracked by `github` using `cd`
