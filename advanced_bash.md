@@ -326,7 +326,7 @@ When browsing with a proxy server, the responses users receive may be altered fo
 
 ## Nginx default configuration
 The pathway to the default nginx file is : `/etc/nginx/sites-available/default` and the contents are as follows
-```ruby
+```bash
 ##
 # You should look at the following URL's in order to grasp a solid understanding
 # of Nginx configuration files in order to fully unleash the power of Nginx.
@@ -433,7 +433,7 @@ server {
 ## Setting up a nginx reverse proxy- provisioning
 1) Inside your `app` folder (the one which is synced), creater a file called `reverse_proxy`
 2) Inside the file, enter this code :
-```ruby
+```bash
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -457,7 +457,7 @@ server {
 6) Notice how we must specify how to get to the `reverse_proxy` file before we can copy it. When we launch our VE we are in the `vagrant` directory, adn the command shows the `relative path` to the file. The `absolute path` can also always be used instead. You must also declare the `absolute path` to the target file.
 7) Run: `sudo systemctl restart nginx -y` -> This will restart `nginx`, saving the new configuration.
 8) If entered correctly, your commands should look like this :
-```ruby
+```bash
 # Remove default nginx configuration
 sudo rm /etc/nginx/sites-available/default
 # Copy the reverse proxy file containing the relevant code into that location
