@@ -294,13 +294,180 @@ cd app; npm install
 # Reverse proxy
 ## What are Ports
 * A port is a virtual point where network connections start and end. Ports are software-based and managed by a computer's operating system. Each port is associated with a specific process or service. Ports allow computers to easily differentiate between different kinds of traffic: emails go to a different port than webpages, for instance, even though both reach a computer over the same Internet connection
-## What is a reverse proxy
+* A port or port number is a number assigned to uniquely identify a connection endpoint and to direct data to a specific service
+## Proxy and reverse proxy
+* `Proxy`-> A proxy server, sometimes referred to as a forward proxy, is a server that routes traffic between client(s) and another system, usually external to the network. By doing so, it can regulate traffic according to preset policies, convert and mask client IP addresses, enforce security protocols, and block unknown traffic.
+* `Reverse poxy` -> A reverse proxy is a type of proxy server. Unlike a traditional proxy server, which is used to protect clients, a reverse proxy is used to protect servers. A reverse proxy is a server that accepts a request from a client, forwards the request to another one of many other servers, and returns the results from the server that actually processed the request to the client as if the proxy server had processed the request itself. The client only communicates directly with the reverse proxy server and it does not know that some other server actually processed its request
+## Proxy benefits
+By employing a proxy server, clients can safeguard their vital data from malicious cyber-attackers. Seamlessly protecting confidential information, these proxies provide an extra layer of security for all online users!
+Proxy servers can be used to access blocked or restricted websites, opening up a world of possibilities for those working in an office or school. Easily bypassing any geographic boundaries put in place by certain sites, users are free to explore content from all over the globe!
+Proxy servers provide a unique layer of protection to users, ensuring their online privacy and security while they surf the web. By employing various proxies, clients can rest assured that no one has access to their personal details or browsing history – allowing them peace of mind when exploring the digital realm.
+Proxy servers are invaluable tools for improving user experience and accelerating digital operations. With their formidable caching capabilities, they can significantly enhance data transmission speeds – streamlining the process of information retrieval like never before!
+Accessing websites with a proxy server is more efficient than going directly to the source. Its cache system stores recently requested webpages, allowing it to serve multiple requests from the same page without having to request each one individually – thus reducing bandwidth usage and increasing network performance.
+Companies can rely on proxy servers to help keep their network secure by disallowing access to certain websites. Instead of simply blocking out sites, proxies route users away from restricted pages and maintain a log of all web requests so businesses know exactly how much time is being spent online. This provides greater transparency into employee internet usage while also keeping networks safe and sound!
+With a proxy server, increased privacy is just the beginning. Web requests can be encrypted to keep confidential data and transactions private from third-party snoopers. Organizations benefit even further with added security measures that reduce potential malware threats while providing secure connections for safeguarding sensitive corporate information.
+## Proxy risks
+If you’re looking for a proxy server with an active cache system, be sure to consider dedicated or paid options. While free or shared solutions may seem appealing on the surface due to their price tag, they often come with significant security risks that could put your passwords and other sensitive data at risk – making investing in higher-quality proxies more than worth it!
+Encrypted connections, such as those made through proxy servers, aren’t always foolproof. Data can still be exposed when TLS or SSL encryption is in place. Don’t let your sensitive information slip away without the protection it needs!
+Through the use of a proxy server, it’s possible to bypass even the most stringent website blocking. Unfortunately, this often leaves students exposed to potentially harmful and offensive content.
+When browsing with a proxy server, the responses users receive may be altered for better or worse. This can create unpredictable results depending on whether your connection is secured by encryption.
+
+## Reverse proxy benefits
+* `Encryption tool`: Encryption can be expensive for an origin server but using reverse proxies can help with this. They can decrypt all incoming requests and encrypt all outgoing requests (SSL/TSL). 
+* `Caching`: Reverse proxies can also cache content improving the performance speed, reducing page load times and improving content delivery to clients. 
+* `Load balancing`: Reverse proxies can help with the traffic flow on the main server. They can reduce the load on the main server by evenly distributing the load on all the servers. These proxies will also send clients to the servers which are located nearest to them, reducing response times. 
+* `Security`: Your origin server’s IP address is masked which provides protection against potential attacks, such as DDoS attacks. You can also place a web application firewall on your reverse proxies for further protection against hackers and bots. 
+* `Testing`: Reverse proxies can perform A/B testing and multivariate testing without JavaScript tags or coding.
+## Risks with reverse proxy
+* `Risk of information stored`: Since a reverse proxy can track IP addresses and encrypt/decrypt information, it is also able to store data such as passwords. This can be a problem if it’s run by a malicious party. Moreover, with such sensitive information it can be risky using a reverse proxy of a third party as they need to adhere to the triad of Confidentiality, Integrity and Availability. 
+* `HTTP request smuggling`: This is a web application attack that exploits differences between web servers and their reverse proxies. It can allow the attacker to submit a request with a user’s session and interfere with the processing of HTTP requests. 
+* `Risk of failure`: If the proxy is fronting many different domains, its outage can bring down all of those. Also, if there is no way to access the back-end server directly, the outage can disrupt operations. 
+![](proxy_diagram.png)
+
+## Nginx default configuration
+The pathway to the default nginx file is : `/etc/nginx/sites-available/default` and the contents are as follows
+```ruby
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# http://wiki.nginx.org/Pitfalls
+# http://wiki.nginx.org/QuickStart
+# http://wiki.nginx.org/Configuration
+#
+# Generally, you will want to move this file somewhere, and start with a clean
+# file but keep this around for reference. Or just disable in sites-enabled.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        # SSL configuration
+        #
+        # listen 443 ssl default_server;
+        # listen [::]:443 ssl default_server;
+        #
+        # Note: You should disable gzip for SSL traffic.
+        # See: https://bugs.debian.org/773332
+        #
+        # Read up on ssl_ciphers to ensure a secure configuration.
+        # See: https://bugs.debian.org/765782
+        #
+        # Self signed certs generated by the ssl-cert package
+        # Don't use them in a production server!
+        #
+        # include snippets/snakeoil.conf;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+                # proxy_pass http://localhost:8080;
+                # proxy_http_version 1.1;
+                # proxy_set_header Upgrade $http_upgrade;
+                # proxy_set_header Connection 'upgrade';
+                # proxy_set_header Host $host;
+                # proxy_cache_bypass $http_upgrade;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        # include snippets/fastcgi-php.conf;
+        #
+        #       # With php7.0-cgi alone:
+        #       fastcgi_pass 127.0.0.1:9000;
+        #       # With php7.0-fpm:
+        #       fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+
+
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+#server {
+#       listen 80;
+#       listen [::]:80;
+#
+#       server_name example.com;
+#
+#       root /var/www/example.com;
+#       index index.html;
+#
+#       location / {
+#              try_files $uri $uri/ =404;
+#       }
+#
+```
+## Setting up a nginx reverse proxy
+1) When in virtual environemt, use command: `sudo nano /etc/nginx/sites-available/default`. This should open up the default file which can be seen above.
+2) Replace the line `try_files $uri $uri/ =404;` with :`proxy_pass http://localhost:3000/;`
+3) To confirm the change, run : `sudo service nginx restart`
+4) Navigate to the `app` folder and run the app
+5) Enter the IP into the browse without the 3000 port code, you should see the following out put:
+
+![](reverse_p_app.png)
+
+
+## Setting up a nginx reverse proxy- provisioning
+1) Inside your `app` folder (the one which is synced), creater a file called `reverse_proxy`
+2) Inside the file, enter this code :
+```ruby
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+
+        index index.html index.htm index.nginx-debian.html;
+
+        servername ;
+
+        location / {
+                proxy_pass http://localhost:3000/;
+        }
+
+}
+```
+3) Inside your `provision.sh` file, add the following code:
+4) Run: `sudo rm /etc/nginx/sites-available/default` -> This removes the default nginx proxy configuration
+5) Run: `sudo cp app/reverse_proxy /etc/nginx/sites-available/default` -> This copies the contents of your `reverse_proxy` file (which has the reverse proxy configuration) and copies into the path :`/etc/nginx/sites-available/default` under the name `default`, since no file called `default` exists after we deleted it.
+6) Notice how we must specify how to get to the `reverse_proxy` file before we can copy it. When we launch our VE we are in the `vagrant` directory, adn the command shows the `relative path` to the file. The `absolute path` can also always be used instead. You must also declare the `absolute path` to the target file.
+7) Run: `sudo systemctl restart nginx -y` -> This will restart `nginx`, saving the new configuration.
+8) If entered correctly, your commands should look like this :
+```ruby
+# Remove default nginx configuration
+sudo rm /etc/nginx/sites-available/default
+# Copy the reverse proxy file containing the relevant code into that location
+sudo cp app/reverse_proxy /etc/nginx/sites-available/default
+# Restart nginx to confirm changes
+sudo systemctl restart nginx -y
+```
+* The comments arent neccessary, they're only there for clarity
+* **Note- important to only run these commands after installing and enabling nginx in your virtual machine**
 
 
 
 
-
-
-
-* REverse proxy - allows us to go straight to the app without showing the additional :3000
-* to view app right now need : app number

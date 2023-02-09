@@ -11,6 +11,15 @@ sudo apt-get install nginx -y
 # Enable or Start Nginx
 sudo systemctl enable nginx -y
 
+
+# Reverse proxy setup:
+# Remove default nginx configuration
+sudo rm /etc/nginx/sites-available/default
+# Copy the reverse proxy file containing the relevant code into that location
+sudo cp app/reverse_proxy /etc/nginx/sites-available/default
+# Restart nginx to confirm changes
+sudo systemctl restart nginx -y
+
 # Install nodejs dependencies
 sudo apt-get install python-software-properties
 
