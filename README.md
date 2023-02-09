@@ -13,6 +13,11 @@ DevOps engineers aim to achieve the following:
 * Work together more
 * Continuous release cycles
 * Automated testing throughout
+## Why is DevOps needed
+* Companies have a problem they dont know how to resolve
+* Companies have a problem they know how to solve but dont have the skills/ manpower
+* Boils down to resolving problems
+* Problems tend to be unique -> problem solving is key
 
 
 DevOps engineers are esponsible for tying teams together in other areas of software development cycle. DevOps emerged after development of cloud based tech which allowed allowed for easier incremental developents
@@ -128,6 +133,6 @@ Setting up a development environment will require the following software and fea
 * In binary an ipv4 address is a 32 binary
 * Changing permissions on file -> could be useful
 
-## ALinux and BASH commands
+
 
 

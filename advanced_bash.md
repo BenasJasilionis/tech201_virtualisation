@@ -128,16 +128,18 @@ A wildcard in Linux is a symbol or set of symbols representing other characters.
 * Need to install it -> `sudo apt install tree -y`
 * Then type `tree` and it will show how your directories and files branch
 * Can look at specific folder in tree format -> `tree foldername`
-* piping 
+* piping `|`- puts the previous commands output into the next command
+* E.g: `ps aux | grep nginx` : this will store the autput of `ps aux` into the `grep nginx`. Running the whole command will highlight any instances of `nginx` in the `ps aux` menu
 * stddr
 
 ## Updating the development environment - Syncing folder with dev environment
-**When starting make sure no development environment is running. Also need to make sure that the file to be uploaded and the environemtn file are both in the same directory as the vagrant file before starting**
+**When starting make sure no development environment is running. Also need to make sure that the file to be uploaded and the environment file are both in the same directory as the vagrant file before starting**
 * Sync new application to virtual environment by putting the following code in the vagrant file in you IDE. Best to put it under the box configuration line for clarity -` config.vm.synced_folder "folder_you_want_to_sync", "/home/vagrant/app` specify path to the new app
+* Full command-> `config.vm.synced_folder "app", "/home/vagrant/app"`
 * Need to specify where to put folder in virtual machine, this is done by the code `home/vagrant/foldername` (in this case app)
 * Folder should now be in virtual environment
 ## Updating the development environment- Running tests
-* `cd` into `spec-tests` which is found in the environment folder.
+* In vscode :`cd` into `spec-tests` which is found in the environment folder.
 * The `spec-tests` folder is premade by someone else, and it has all the tests which need to be run by us to make sure that the developer environment has everything that it needs
 * Run `gem install bundler` - installs a ruby testing framework
 * Run `bundle` bundle all the tests into 1 so they run at the same time
@@ -153,23 +155,25 @@ A wildcard in Linux is a symbol or set of symbols representing other characters.
 * Specific port that things need to go to
 ## Updating the development environment- Updating the App
 **DONT FORGET SUDO**
-* In github, run:`sudo app-get update` -> updates database so it knows what upgrades are available
-* In github, run:`sudo app-get upgrade` -> makes all the changes
-* In github, run:`sudo appt-get install nginx -y` -> installs `nginx` and the `-y` automatically says `yes` to prompts in the process
-* In github, run: `sudo systemctl enable nginx` (can also use `sudo systemctl start nginx`) -> Enable nginx 
+* In github virtual machine, run:`sudo apt-get update` -> updates database so it knows what upgrades are available
+* In github virtual machine, run:`sudo apt-get upgrade` -> makes all the changes
+* In github virtual machine, run:`sudo apt-get install nginx -y` -> installs `nginx` and the `-y` automatically says `yes` to prompts in the process
+* In github virtual machine, run: `sudo systemctl enable nginx` (can also use `sudo systemctl start nginx`) -> Enable nginx 
 * Can run `rake spec` again to see progress
-* Still need `nodejs` with a specific version and pm2
+* Still need `nodejs` with a specific version and `pm2`
 * If you dont need a specific version can just do `sudo apt-get install package_name`
 * Different for different software, for nopdejs : `sudo apt-get install python-software-properties` - installs dependencies needed for nodejs
-* Then run : ``curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -` tells appt to overwrite the version of node js with this version
-* Lastly, run : `sudo apt-get install notejs -y`
+* Then run : `curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -` tells appt to overwrite the version of node js with this version
+* Lastly, run : `sudo apt-get install nodejs -y`
 * `rake spec` update should show that only pm2 is missing now
 * pm2 is installed using nodejs
 * Run: `sudo npm install pm2 -g`
 * One final `rake spec` should return no errors
-* Run `npm install` to install app
-* After the install do `node app.js`
+* In github virtual machine app folder: Run `npm install` to install app
+* After the install run: `node app.js`
 * Should display : "Your app is ready and listening on port 3000"
 * This will run in the foreground, to access it will need to enter the ip, adding a :3000 at the end
+## Provisioning
 * Works but took a long time
 * With provisioning, can do all of that within the vagrant file, so when `vagrant up` is ran everything should be working
+
