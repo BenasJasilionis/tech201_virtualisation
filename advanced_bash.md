@@ -176,4 +176,131 @@ A wildcard in Linux is a symbol or set of symbols representing other characters.
 ## Provisioning
 * Works but took a long time
 * With provisioning, can do all of that within the vagrant file, so when `vagrant up` is ran everything should be working
+* Provisioning -> preparing things before you need them
+* Provisioners in Vagrant allow you to automatically install software, alter configurations, and more on the machine as part of the vagrant up process
+## When provisioning happens
+* On the first vagrant up that creates the environment, provisioning is run. If the environment was already created and the up is just resuming a machine or booting it up, they will not run unless the `--provision` flag is explicitly provided.
+* When vagrant provision is used on a running environment.
+* When `vagrant reload --provision` is called. The `--provision` flag must be present to force provisioning.
+* You can also bring up your environment and explicitly not run provisioners by specifying `--no-provision`.
+## Shell provisioner - Separate shell file
+* Can put all commands into a file and run them
+* Make a `provision.sh` file in the same directory as vagrant
+* Need to add something to top of file so target system knows what sort of file it will be running : `#!/bin/bash` -> tells whatever is running the file that its a `bash` script
+* When entering the linux commands, must specify `-y` to automate response because we can't answer the question manually
+* If the file is on the same directory level as the vagrant file, but **not in** the vagrant file, need to do `path: shell_file.sh`, otherwise `inline: script_name`
+* Full command: `config.vm.provision "shell", path: "provision.sh"`
+* Can check version of installed software, e.g: `nginx -v`
+* Can check if `nginx` is enabled : `sudo systemctl config nginx` where `nginx` is the name of the program to be checked
+## Shell provisioner - script in the vagrant file
+* The Vagrant Shell provisioner allows you to upload and execute a script within the guest machine
+* `inline` (string) - Specifies a shell command inline to execute on the remote machine
+* For example:
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.provision "shell",
+    inline: "echo Hello, World"
+end
 
+```
+* The `config.vm.provision "shell"` line is used to define that we are using a `shell` script
+* Whatever follows the `inline:` will be run in the virtual machine, in this case this will be ` Hello, World`
+* Another example can be seen using a `script`:
+```ruby
+$script = <<-SCRIPT
+echo I am provisioning...
+date > /etc/vagrant_provisioned_at
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "shell", inline: $script
+end
+```
+* Here, the `script` is specified to be run by `inline:`, which will output `I am provisioning...`
+* Notice how the `script` starts with `<<-SCRIPT` and ends with `SCRIPT`. This is known as a `Here Document` or a `heredoc`
+* Also notice how every block of code is finalised with `end` which is on the same indentation level as `Vagrant.configure`
+
+## Setting up a Virtual Vagrant Developer Environment from scratch using provisioning
+1) In gitbash terminal, navigate to desired directory
+2) In the directory, run `vagrant init ubuntu/xenial64` which will initialise a vagrant cinfiguration file for a linux VE
+3) Navigate to the vagrant file in your IDE and add the following doe: `config.vm.network "private_network", ip: "192.168.10.100"` - this will make the IP address static, you can make it whatever you like as long as it complies with formatting requirements.
+4) Unzip your `app` and `environment` folders into the same directory as your vagrant files
+5) Sync your app with your vagrant VE by putting the following code in your vagrant file : `config.vm.synced_folder "app", "/home/vagrant/app"`
+6) We will be provisioning our VE with a bash script, so make a new file called `provision.sh` in the same directory as the vagrant file - the `sh` is important to designate it as a shell file
+7) Go into the `provision.sh` file and on the first line type the following code :`#!/bin/bash`. This tells any program that will run the file that it is a bash script.
+8) Now, instead of entering the commands manually in the VE, enter all of the required commads in the `bash` file.
+9) For this example it will look like the following:
+```ruby
+#!/bin/bash
+
+# Update and upgrade
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+
+# Install Nginx
+sudo apt-get install nginx -y
+
+# Enable or Start Nginx
+sudo systemctl enable nginx -y
+
+# Install nodejs dependencies
+sudo apt-get install python-software-properties
+
+# Overwrite with desired version of nodejs
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
+# Install nodejs
+sudo apt-get install nodejs -y
+
+# Install pm2
+sudo npm install pm2 -g
+
+# Install app
+cd app; npm install
+```
+10) The comments explain what each line of code does
+11) Navigate into your vagrant file and enter the following code: `config.vm.provision "shell", path: "provision.sh"`
+12) If you have followed every step correctly, your vagrant file should look like this :
+
+
+![](vagrant_screenshot.png)
+
+13) Run your git bash terminal as administrator and once inside run `vagrant up`
+14) The run `vagrant ssh` to enter the VE
+15) Optionally, you can check whether your programs are correctly installed by running the following code:
+16) `nginx -v` will check the version of nginx, can check the versions of any program
+17 `sudo systemctl config nginx` will check if nginx is enabled, again, you can swap nginx for any other program you wish to check the status of
+18) If everything is installed properly, navigate to folder `app` in the VE
+19) To run the app, run: `node app.js` which should have the following output:
+
+![](end_screenshot.png)
+
+
+20) To check everything is fine, navigate to the webpage using the ip + the port number -> `192.168.10.100:3000`
+21) You should see the following webpage:
+
+
+![](sparta_app.png)
+
+
+
+
+
+
+
+
+
+# Reverse proxy
+## What are Ports
+* A port is a virtual point where network connections start and end. Ports are software-based and managed by a computer's operating system. Each port is associated with a specific process or service. Ports allow computers to easily differentiate between different kinds of traffic: emails go to a different port than webpages, for instance, even though both reach a computer over the same Internet connection
+## What is a reverse proxy
+
+
+
+
+
+
+
+* REverse proxy - allows us to go straight to the app without showing the additional :3000
+* to view app right now need : app number
