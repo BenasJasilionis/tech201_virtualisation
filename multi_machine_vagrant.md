@@ -164,7 +164,7 @@ node app.js
 ```
 6) In your web browser, enter the following URL:
 ```
-http://192.168.10.100:3000/posts
+http://192.168.10.100/posts
 ```
 * The app content should now be updated with something like the following:
 
