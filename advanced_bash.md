@@ -467,6 +467,89 @@ sudo systemctl restart nginx -y
 ```
 * The comments arent neccessary, they're only there for clarity
 * **Note- important to only run these commands after installing and enabling nginx in your virtual machine**
+## MultiMachine Vagrant
+* Vagrant up -> sends instructions to virtual box
+* Virtula box makes machine
+* Provisioners are applications we need to use witihn virtual machine
+* Vagrant sends instructions to virtual machine to install programs( provisioners)
+* Can then ssh into file and use pre installed provisioners
+* Currently have VE with app on our OS
+* Our app wants to use dynamic content -> post page wants to pull from database. No database stored in app folder
+* Need a second virtual machine to run this database
+* Will need to install database software on the other VE
+* Will need to connect the 2 virtual machines
+* App will and database will then be able to send information and requests back and forth
+* This is the full
+* This is a monolith because its all dependent on our base OS
+* Once app is working locally, later want to put it on the cloud, then want to introduce CI/CD pipe line, etc... until we have microservice architecture
+* Once set up, should be able to acces posts page -> only works if database is connected. If content is changed in the database, refreshing the web page will refresh the content. Hence the content is dynamic.
+
+## Instructions
+1) In vscode: Run `vagrant destroy` to destryo both VM's
+2) To add a 2nd VM, consult Vagrant file
+3) The 2 VM must have different IPs so that they can get connected
+4) Each VM set up has an `end` command, the final `end` finishes running the whole file
+5) In vscode run: `vagrant up` to create both virtual machines
+* Can specify if you want to destroy a specific machine -> `vagrant destroy app`
+* `vagrant status` -> Tells us what VM's are avaialbe, which once are created, and which service is used to create them
+* Can only have 1 vagrant file per folder
+6) On 2 gitbahs terminals, run: `vagrant ssh app` and `vagrant ssh database`
+7) On database VE, enter command to get the database key - mongo db documentation
+8) Can run a command to see itf its correctly installed
+9) Run on db : `sudo apt-get update` -> confirms and updates any packages that can be downloaded
+10) Run on db: `sudo apt-get upgrade` -> implement available upgrades
+* Dont use `upgrade` on production environment because this will cause downtime, best case scenario is only until everything upgrades 
+11) Run the correct command to download the mongodb needed
+12) Run `sudo systemctl start mongod`
+13) Run `sudo systemctl enable mongod` -> should see output that system is available
+* Mongo is used because developers can update contents
+## Link
+* Need to change a configuration file within mongo
+1) `sudo nano /etc/mongod.conf`
+2) Find `network interfaces`
+3) Should have a port and bindip
+4) Need to change bindip because its saying what range of ip ranges can access mongo -> currently only ips that start with 127 and end with 1 can access it, our IPs cannot
+5) Can put in a specific IP address
+6) Making everything 0 means any IP can connect -> 0.0.0.0
+7) `CTRL x`, `y`, `ENTER`
+8) Restart mongodb -> `sudo systemctl restart mongod`
+9) Enable again -> `sudo systemctl enable mongod`
+10) Check status -> `sudo systemctl status mongod`
+11) Databse is set up, but still not connected
+## Move to app VE
+1) `cd` into `app` folder
+2) To connect database need to make an `environment variable`
+* ENV var -> something that allows us to set a variable that we can use to specify the information about a particular environment
+* Need it to connect database to our app
+3) Can make a normal variable `MY-VAR=hello` 
+(case doestn matter, but uppercase is used to they are easier to spot)
+4) To see contents -> `echo $MY_VAR`
+5) Normal variable only available in current process taht is running -> only accessible in current bash terminal
+6) Environment variable accessible through whatever process you use to see a machine
+7) Show all environmenet variables in a system -> `printenv`
+8) Make env variable -> `export MY_VAR=helloagain`
+9) By default environment variables that we set are not persistant  -> they will not stay there if the environment is closed
+10) Theres a file in linux we can use to specify our environment variables
+10) Run: `sudo nano .bashrc` -> its a hidden file
+11) Allows you to set permanente env variables
+12) Go to bottom of file and add the same command to add the variable -> `export MY_PERSISTENT_ENVAR=This_env_is_persistent
+13) save and exit
+14) Have to run the file -> `source .bashrc`
+15) Now of machine is shutdowna nd powered up again, variable will persist.
+16) Need an env variable on APP machine to specify to mongodp how to connect
+17) Run :`export DB_HOST=mongodb://192.168.10.150:27017/posts` ->specify name, the url, the port and the specific page to access
+18) Can show specific env variable -> `printenv DB_HOST`
+19 ) Now within this env whenever iot comes to a DB host will know where to go and get the information from
+20) Go into `app` folder -> `cd app`
+21) Run `npm install` even if its already installed before seeding to avoid problems
+22) comes up with `node seeds/seeds.js` which runs a developer command that sets up the database
+23) for this command to work, first had to set up the env variable between our APP and DATABASE
+24) `seeds` because theres a folder called `seeds`
+25) Database seeded = database is filled on DB ENV
+26) Run the app `node app.js`
+27) Doing `/posts` at the end will grab the posts folder content from the database and show it.
+
+
 
 
 
