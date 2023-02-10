@@ -126,6 +126,7 @@ sudo systemctl enable mongod
 ```
 sudo systemctl status mongod
 ```
+* On your keyboard press: `CTRL + Z` to exit the menu
 10) Open the database configuration file in editor mode:
 ```
 sudo nano /etc/mongod.conf
