@@ -30,7 +30,7 @@ end
 
 ## Configuring additional files
 1) Download and unzip `app` and `environment` folders in the same directory as your vagrant file
-2) Create a in the same directory as your vagrant file called `provision.sh`. Copy the following code :
+2) Create a bash file in the same directory as your vagrant file called `provision.sh`. Copy the following code :
 ```bash
 
 # Install Nginx
@@ -106,7 +106,7 @@ sudo apt-get update -y
 ```bash
 sudo apt-get upgrade -y
 ```
-5) Install the correct version of the databse :
+5) Install the correct version of the database :
 ```bash
 sudo apt-get install mongodb-org=3.2.20 -y
 ```
@@ -126,7 +126,7 @@ sudo systemctl enable mongod
 ```
 sudo systemctl status mongod
 ```
-10) Open the database configuration file in editor more:
+10) Open the database configuration file in editor mode:
 ```
 sudo nano /etc/mongod.conf
 ```
@@ -147,12 +147,12 @@ sudo systemctl enable mongod
 vagrant ssh app
 ```
 * You should now be in your `app` virtual machine
-2) Navigate to your `app` folder using `cd` until you're in a folder which has app.js when `ls` is ran
-3) Create an environmental variable to link to the post folder of the database:
+2) Navigate to your `app` folder using `cd` until you're in a folder which has `app.js` when `ls` is ran
+3) Create an environmental variable to link to the `posts` folder of the database:
 ```
 export DB_HOST=mongodb://192.168.10.150:27017/posts
 ```
-* Run `printenv DB_HOST` to check the contents, if done correctly you should be displayed : `mongodb://192.168.10.150:27017/posts
+* Run `printenv DB_HOST` to check the contents, if done correctly you should be displayed : `mongodb://192.168.10.150:27017/posts`
 4) Seed the database :
 ```
 node seeds/seed.js
@@ -170,4 +170,3 @@ http://192.168.10.100:3000/posts
 
 ![](multi_machine_proxy.png)
  ### Additional context
- 
