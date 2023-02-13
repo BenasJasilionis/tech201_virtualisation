@@ -34,3 +34,15 @@ sudo npm install pm2 -g
 
 # Install app
 cd app; npm install
+
+# Environmental vabriable
+
+echo 'export DB_HOST=mongodb://192.168.10.150:27017/posts' >> ~/.bashrc 
+source .bashrc
+
+# Enable reverse proxy
+sudo systemctl restart nginx 
+
+# Seed the database
+node seeds/seed.js
+
