@@ -9,6 +9,13 @@ vagrant init ubuntu/xenial64
 2) Open your vagrant file and delete all contents. Replace with the following code block:
 ```ruby
 Vagrant.configure("2") do |config|
+  config.vm.define "database" do |database|
+    database.vm.box = "ubuntu/bionic64"
+    database.vm.network "private_network", ip: "192.168.10.150"
+    
+    database.vm.synced_folder "environment", "/home/vagrant/environment"
+    database.vm.provision "shell", path: "db_provision.sh"
+  end
   config.vm.define "app" do |app|
     app.vm.box = "ubuntu/bionic64"
     app.vm.network "private_network", ip: "192.168.10.100"
@@ -17,12 +24,7 @@ Vagrant.configure("2") do |config|
     app.vm.provision "shell", path: "provision.sh", privileged: false
   end
 
-  config.vm.define "database" do |database|
-    database.vm.box = "ubuntu/bionic64"
-    database.vm.network "private_network", ip: "192.168.10.150"
-    
-    database.vm.synced_folder "environment", "/home/vagrant/environment"
-  end
+  
 end
 ```
 ### Command breakdown
