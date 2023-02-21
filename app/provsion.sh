@@ -28,6 +28,7 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 # Install nodejs
 sudo apt-get install nodejs -y
+sudo apt install npm
 
 # Install pm2
 sudo npm install pm2 -g
