@@ -16,7 +16,7 @@ sudo systemctl enable nginx -y
 # Remove default nginx configuration
 sudo rm /etc/nginx/sites-available/default
 # Copy the reverse proxy file containing the relevant code into that location
-sudo cp /home/ubuntu/app/reverse_proxy /etc/nginx/sites-available/default
+sudo cp /home/ubuntu/tech201_virtualisation/app/reverse_proxy /etc/nginx/sites-available/default
 # Restart nginx to confirm changes
 sudo systemctl restart nginx -y
 
@@ -28,7 +28,6 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 # Install nodejs
 sudo apt-get install nodejs -y
-sudo apt install npm
 
 # Install pm2
 sudo npm install pm2 -g
@@ -36,13 +35,12 @@ sudo npm install pm2 -g
 # Install app
 npm install
 
-# Environmental vabriable
-
-
 # Enable reverse proxy
-sudo systemctl restart nginx
+sudo systemctl restart nginx 
 
+# Make node.js run in the background
 sudo npm install forever -g
 forever start app.js
+
 
 
