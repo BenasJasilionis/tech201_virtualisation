@@ -41,4 +41,7 @@ npm install
 # Enable reverse proxy
 sudo systemctl restart nginx
 
-# Seed the database
+sudo npm install forever -g
+forever start app.js
+
+
