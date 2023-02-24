@@ -39,8 +39,6 @@ npm install
 sudo systemctl restart nginx 
 
 # Make node.js run in the background
-sudo npm install forever -g
-forever start app.js
 
 
 
