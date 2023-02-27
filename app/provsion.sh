@@ -14,11 +14,11 @@ sudo systemctl enable nginx -y
 
 # Reverse proxy setup:
 # Remove default nginx configuration
-sudo rm /etc/nginx/sites-available/default
+#sudo rm /etc/nginx/sites-available/default
 # Copy the reverse proxy file containing the relevant code into that location
-sudo cp /home/ubuntu/tech201_virtualisation/app/reverse_proxy /etc/nginx/sites-available/default
+#sudo cp /home/ubuntu/tech201_virtualisation/app/reverse_proxy /etc/nginx/sites-available/default
 # Restart nginx to confirm changes
-sudo systemctl restart nginx -y
+#sudo systemctl restart nginx -y
 
 # Install nodejs dependencies
 sudo apt-get install python-software-properties
@@ -36,7 +36,7 @@ sudo npm install pm2 -g
 npm install
 
 # Enable reverse proxy
-sudo systemctl restart nginx 
+#sudo systemctl restart nginx 
 
 # Make node.js run in the background
 
